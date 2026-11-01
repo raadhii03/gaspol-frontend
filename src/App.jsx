@@ -1,122 +1,128 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+
+import { useState } from "react";
+import "./App.css";
+
+import Header from "./components/header";
+import Sidebar from "./components/sidebar";
+import SummaryCards from "./components/SummaryCards";
+import SpbuList from "./components/SpbuList";
+import SpbuForm from "./components/SpbuForm";
+import SpbuDetail from "./components/SpbuDetail";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeMenu, setActiveMenu] = useState("dashboard");
+  const [selectedSpbu, setSelectedSpbu] = useState(null);
+
+  const [spbuData, setSpbuData] = useState([
+    {
+      id: 1,
+      nama: "SPBU Soekarno-Hatta",
+      nomor: "31.123.01",
+      alamat: "Jl. Soekarno-Hatta, Bandung",
+      status: "Buka",
+      hargaBBM: [
+        { nama: "Pertalite", hargaNasional: 10000, hargaSPBU: null },
+        { nama: "Pertamax", hargaNasional: 12750, hargaSPBU: 13000 },
+        { nama: "Pertamax Turbo", hargaNasional: 13800, hargaSPBU: null },
+      ],
+    },
+    {
+      id: 2,
+      nama: "SPBU Dago",
+      nomor: "34.401.02",
+      alamat: "Jl. Ir. H. Juanda, Bandung",
+      status: "Buka",
+      hargaBBM: [
+        { nama: "Pertalite", hargaNasional: 10000, hargaSPBU: null },
+        { nama: "Pertamax", hargaNasional: 12750, hargaSPBU: null },
+        { nama: "Pertamax Turbo", hargaNasional: 13800, hargaSPBU: 14000 },
+      ],
+    },
+    {
+      id: 3,
+      nama: "SPBU Buah Batu",
+      nomor: "34.402.01",
+      alamat: "Jl. Buah Batu, Bandung",
+      status: "Tutup",
+      hargaBBM: [
+        { nama: "Pertalite", hargaNasional: 10000, hargaSPBU: null },
+        { nama: "Pertamax", hargaNasional: 12750, hargaSPBU: null },
+        { nama: "Pertamax Turbo", hargaNasional: 13800, hargaSPBU: null },
+      ],
+    },
+  ]);
+
+  function handleAddSpbu(spbuBaru) {
+    setSpbuData((dataSebelumnya) => [...dataSebelumnya, spbuBaru]);
+    setActiveMenu("spbu");
+  }
+
+  const totalSpbu = spbuData.length;
+  const spbuBuka = spbuData.filter(
+    (spbu) => spbu.status === "Buka"
+  ).length;
+  const spbuTutup = spbuData.filter(
+    (spbu) => spbu.status === "Tutup"
+  ).length;
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-container">
+      <Sidebar
+        activeMenu={activeMenu}
+        onMenuChange={setActiveMenu}
+      />
 
-      <div className="ticks"></div>
+      <main className="main-content">
+        <Header />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <div className="dashboard-content">
+          {!selectedSpbu && (
+            <>
+              {activeMenu === "dashboard" && (
+                <>
+                  <div className="welcome-section">
+                    <h2>Selamat Datang di GasPol!</h2>
+                    <p>Pantau informasi dan temukan SPBU dengan mudah.</p>
+                  </div>
+
+                  <SummaryCards
+                    total={totalSpbu}
+                    buka={spbuBuka}
+                    tutup={spbuTutup}
+                  />
+
+                  <SpbuList
+                    data={spbuData}
+                    onSelectSpbu={setSelectedSpbu}
+                  />
+                </>
+              )}
+
+              {activeMenu === "spbu" && (
+                <SpbuList
+                  data={spbuData}
+                  onSelectSpbu={setSelectedSpbu}
+                />
+              )}
+
+              {activeMenu === "add" && (
+                <SpbuForm onAddSpbu={handleAddSpbu} />
+              )}
+            </>
+          )}
+
+          {selectedSpbu && (
+            <SpbuDetail
+              spbu={selectedSpbu}
+              onBack={() => setSelectedSpbu(null)}
+            />
+          )}
+        </div>
+
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
