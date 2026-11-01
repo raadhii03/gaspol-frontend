@@ -8,6 +8,7 @@ import SummaryCards from "./components/SummaryCards";
 import SpbuList from "./components/SpbuList";
 import SpbuForm from "./components/SpbuForm";
 import SpbuDetail from "./components/SpbuDetail";
+import SpbuApi from "./components/SpbuApi";
 
 function App() {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -109,6 +110,9 @@ function App() {
               {activeMenu === "add" && (
                 <SpbuForm onAddSpbu={handleAddSpbu} />
               )}
+              {activeMenu === "api" && (
+  <SpbuApi />
+)}
             </>
           )}
 

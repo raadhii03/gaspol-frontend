@@ -4,6 +4,7 @@ function Sidebar({ activeMenu, onMenuChange }) {
     { id: "dashboard", icon: "▦", label: "Dashboard" },
     { id: "spbu", icon: "⌖", label: "Daftar SPBU" },
     { id: "add", icon: "＋", label: "Tambah SPBU" },
+    { id: "api", icon: "↻", label: "Informasi API" },
   ];
 
   return (
